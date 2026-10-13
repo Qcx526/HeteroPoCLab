@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "cuda-bounded-write-oob-v1",
+  "title": "Synthetic bounded-write off-by-one defect",
+  "notice": "Self-built fixture; not a CVE and not a claim about third-party software.",
+  "capacity": 32,
+  "thread_block_size": 32,
+  "allowed_extra_elements": [0, 1, 2],
+  "cases": [
+    {"case_id": "normal", "logical_count": 16, "extra_elements": 0},
+    {"case_id": "capacity_boundary", "logical_count": 32, "extra_elements": 0},
+    {"case_id": "trigger_minimum", "logical_count": 32, "extra_elements": 1},
+    {"case_id": "trigger_maximum", "logical_count": 32, "extra_elements": 2}
+  ],
+  "variants": ["vulnerable", "fixed"],
+  "repeat_case_id": "trigger_minimum",
+  "limits": {
+    "max_candidates": 8,
+    "max_gpu_executions": 9,
+    "max_parallel_runs": 1,
+    "max_device_allocation_bytes": 128,
+    "compile_timeout_seconds": 60,
+    "run_timeout_seconds": 30
+  },
+  "target_error_oracle": {
+    "tool": "compute-sanitizer",
+    "tool_name": "memcheck",
+    "diagnostic": "Invalid __global__ write of size 4 bytes",
+    "kernel": "bounded_write_kernel",
+    "source_filename": "oob_write.cu",
+    "allocation_bytes": 128,
+    "allocation_relation": "address after nearest allocation",
+    "condition": "logical_count == capacity and extra_elements >= 1"
+  }
+}

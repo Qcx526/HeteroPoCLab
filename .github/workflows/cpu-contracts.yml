@@ -30,9 +30,9 @@ jobs:
       - name: Install project and check tools
         run: python -m pip install -e ".[dev]"
       - name: Lint
-        run: ruff check src tests examples/m0a
+        run: ruff check src tests examples/m0a scripts examples/cuda_p1
       - name: Format
-        run: ruff format --check src tests examples/m0a
+        run: ruff format --check src tests examples/m0a scripts examples/cuda_p1
       - name: Types
         run: mypy
       - name: Offline deterministic tests

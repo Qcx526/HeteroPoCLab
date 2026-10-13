@@ -34,3 +34,13 @@ python3 -m venv .venv
 ```
 
 See [M0-A architecture, JSON flow and scientific limits](docs/m0a-domain-contracts.md). Raw local check logs and dependency wheels belong under ignored `output/m0a/`; do not publish host paths or credentials.
+
+## GPU-P1: deterministic CUDA trigger and evidence
+
+GPU-P1 adds a bounded, self-built vulnerable/fixed CUDA fixture and a CUDA implementation of the shared adapter protocol. It generates deterministic parameter candidates, compiles for `sm_75`, runs every binary under Compute Sanitizer, and links exact target diagnostics and raw evidence into M0-A verification results.
+
+```bash
+.venv/bin/python scripts/run_gpu_p1.py --spec examples/cuda_p1/experiment.json
+```
+
+The real WSL2 GTX 1660 acceptance result, reproduction limits, and private evidence location are recorded in [GPU-P1 results and limits](docs/gpu-p1.md). The fixture is not a CVE or third-party target. Its sanitizer result does not establish general vulnerability detection or portability to other GPUs. CPU-only CI checks the deterministic models and target-log parser; it does not claim GPU execution. Raw GPU logs and binaries stay under Git-ignored `output/gpu-p1/`.

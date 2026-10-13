@@ -16,6 +16,7 @@ from heteropoclab.domain import (
     ExecutionRequest,
     ExecutionScope,
     InputEvent,
+    Observation,
     ObservationKind,
     PoCCandidate,
     RawEvidence,
@@ -608,3 +609,166 @@ def test_emulator_explanation_explicitly_limits_physical_hardware_claim(
     )
     assert checked.unmet_conditions == ()
     assert any("not physical hardware" in item for item in checked.limitations)
+
+
+def test_abnormal_process_is_verified_only_with_linked_target_sanitizer_diagnostic(
+    runtime_contract: RuntimeContract,
+) -> None:
+    contract = runtime_contract
+    content = b"synthetic memcheck: Invalid __global__ write; target condition linked"
+    reference = clone(
+        contract.evidence.reference,
+        kind=EvidenceKind.SANITIZER_LOG,
+        sha256=sha256(content).hexdigest(),
+        byte_length=len(content),
+    )
+    evidence = RawEvidence(reference=reference, content=content)
+    observation = clone(
+        contract.observation,
+        kind=ObservationKind.SANITIZER_ERROR,
+        evidence_ids=(reference.id,),
+    )
+    crashed = clone(
+        contract.execution, termination=TerminationStatus.CRASH, exit_code=-11, completed=True
+    )
+    verified = result(
+        contract, execution=crashed, evidence=(evidence,), observations=(observation,)
+    )
+    assert verified.verdict is VerificationVerdict.VERIFIED
+    assert verified.execution.termination is TerminationStatus.CRASH
+    assert verified.execution.exit_code == -11
+    assert not verified.unmet_conditions
+    assert "recorded CRASH status is preserved" in verified.reason
+
+    nonzero_exit = clone(
+        contract.execution,
+        termination=TerminationStatus.ERROR_EXIT,
+        exit_code=5,
+        completed=True,
+    )
+    nonzero_verified = result(
+        contract, execution=nonzero_exit, evidence=(evidence,), observations=(observation,)
+    )
+    assert nonzero_verified.verdict is VerificationVerdict.VERIFIED
+    assert nonzero_verified.execution.termination is TerminationStatus.ERROR_EXIT
+    assert nonzero_verified.execution.exit_code == 5
+
+
+def test_abnormal_result_preserves_supervisor_exit_and_links_each_condition(
+    runtime_contract: RuntimeContract,
+) -> None:
+    contract = runtime_contract
+    input_condition = contract.trigger.constraints[0]
+    target_condition = TriggerConstraint(
+        name="target sanitizer diagnostic",
+        expression="the exact target-specific memcheck observation is present",
+        knowledge=Fact[bool](
+            value=True,
+            status=FactStatus.INFERRED,
+            source=SourceKind.STATIC_ANALYSIS,
+            provenance="offline test contract",
+        ),
+    )
+    trigger = TriggerSpec(
+        vulnerability_id=contract.vulnerability.id,
+        platform_id=contract.candidate.platform_id,
+        constraints=(input_condition, target_condition),
+    )
+    candidate = clone(contract.candidate, trigger_id=trigger.id)
+    execution = clone(
+        contract.execution,
+        candidate_id=candidate.id,
+        termination=TerminationStatus.ERROR_EXIT,
+        exit_code=5,
+    )
+
+    input_bytes = b"observed trigger input"
+    input_reference = clone(
+        contract.evidence.reference,
+        candidate_id=candidate.id,
+        kind=EvidenceKind.STDOUT,
+        sha256=sha256(input_bytes).hexdigest(),
+        byte_length=len(input_bytes),
+    )
+    input_evidence = RawEvidence(reference=input_reference, content=input_bytes)
+    target_bytes = b"exact target-specific sanitizer diagnostic"
+    target_reference = clone(
+        contract.evidence.reference,
+        candidate_id=candidate.id,
+        kind=EvidenceKind.SANITIZER_LOG,
+        sha256=sha256(target_bytes).hexdigest(),
+        byte_length=len(target_bytes),
+    )
+    target_evidence = RawEvidence(reference=target_reference, content=target_bytes)
+
+    input_observation = clone(
+        contract.observation,
+        candidate_id=candidate.id,
+        condition_id=input_condition.id,
+        kind=ObservationKind.CONDITION,
+        status=FactStatus.OBSERVED,
+        satisfied=True,
+        evidence_ids=(input_reference.id,),
+    )
+    target_observation = Observation(
+        run_id=execution.run_id,
+        candidate_id=candidate.id,
+        platform_id=execution.platform_id,
+        kind=ObservationKind.SANITIZER_ERROR,
+        status=FactStatus.OBSERVED,
+        provenance=contract.observation.provenance,
+        satisfied=True,
+        condition_id=target_condition.id,
+        evidence_ids=(target_reference.id,),
+    )
+
+    verified = verify(
+        candidate,
+        trigger,
+        execution,
+        (input_evidence, target_evidence),
+        (input_observation, target_observation),
+    )
+    assert verified.verdict is VerificationVerdict.VERIFIED
+    assert verified.execution.termination is TerminationStatus.ERROR_EXIT
+    assert verified.execution.exit_code == 5
+    assert not verified.unmet_conditions
+
+
+def test_crash_or_non_sanitizer_evidence_alone_never_verifies_target_error(
+    runtime_contract: RuntimeContract,
+) -> None:
+    contract = runtime_contract
+    crashed = clone(
+        contract.execution, termination=TerminationStatus.CRASH, exit_code=-11, completed=True
+    )
+    assert result(contract, execution=crashed).verdict is VerificationVerdict.NOT_VERIFIED
+
+    content = b"synthetic stdout is not the memcheck error report"
+    reference = clone(
+        contract.evidence.reference,
+        kind=EvidenceKind.STDOUT,
+        sha256=sha256(content).hexdigest(),
+        byte_length=len(content),
+    )
+    evidence = RawEvidence(reference=reference, content=content)
+    observation = clone(
+        contract.observation,
+        kind=ObservationKind.SANITIZER_ERROR,
+        evidence_ids=(reference.id,),
+    )
+    assert (
+        result(
+            contract, execution=crashed, evidence=(evidence,), observations=(observation,)
+        ).verdict
+        is VerificationVerdict.NOT_VERIFIED
+    )
+
+
+def test_unknown_application_exit_propagates_unknown(runtime_contract: RuntimeContract) -> None:
+    unknown = clone(
+        runtime_contract.execution,
+        termination=TerminationStatus.UNKNOWN,
+        exit_code=None,
+    )
+    assert result(runtime_contract, execution=unknown).verdict is VerificationVerdict.UNKNOWN
