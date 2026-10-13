@@ -1,8 +1,7 @@
 """Scientific artifacts and conservative, evidence-linked verification contracts.
 
-Provenance is a declaration, not an attestation. This module executes nothing;
-M0-A producers emit only synthetic/Mock data. A future trusted executor must
-supply real artifacts before the structural VERIFIED rules can be meaningful.
+Provenance is a declaration, not an attestation. This module executes no code;
+trusted adapters must supply raw artifacts and target-specific observations.
 """
 
 from __future__ import annotations
@@ -52,8 +51,10 @@ class ExecutionScope(str, Enum):
 class TerminationStatus(str, Enum):
     NORMAL = "NORMAL"
     CRASH = "CRASH"
+    ERROR_EXIT = "ERROR_EXIT"
     TIMEOUT = "TIMEOUT"
     NOT_EXECUTED = "NOT_EXECUTED"
+    UNKNOWN = "UNKNOWN"
 
 
 class EvidenceKind(str, Enum):
@@ -291,9 +292,14 @@ class ExecutionRecord(StrictFrozenModel):
         if self.termination is TerminationStatus.NOT_EXECUTED:
             if self.completed or self.exit_code is not None:
                 raise ValueError("not-executed records cannot claim completion or an exit code")
+        if self.termination is TerminationStatus.UNKNOWN and self.exit_code is not None:
+            raise ValueError("unknown process termination cannot claim an exit code")
         if self.termination is TerminationStatus.NORMAL:
-            if not self.completed or self.exit_code is None:
-                raise ValueError("normal completion requires an actual recorded exit code")
+            if not self.completed or self.exit_code != 0:
+                raise ValueError("normal completion requires a recorded zero exit code")
+        if self.termination is TerminationStatus.ERROR_EXIT:
+            if not self.completed or self.exit_code in (None, 0):
+                raise ValueError("error exit requires a recorded nonzero process exit code")
         return self
 
 
@@ -416,8 +422,8 @@ def _assess(
             VerificationVerdict.NOT_VERIFIED,
             "A build or incomplete run does not prove triggering.",
         )
-    if execution.termination is not TerminationStatus.NORMAL:
-        return VerificationVerdict.NOT_VERIFIED, "Crash or timeout does not prove a target trigger."
+    if execution.termination in (TerminationStatus.NOT_EXECUTED, TerminationStatus.UNKNOWN):
+        return VerificationVerdict.UNKNOWN, "The target process outcome is unknown or not executed."
     if not evidence or any(raw.reference.provenance.source_sha256 is None for raw in evidence):
         return VerificationVerdict.UNKNOWN, "Raw evidence or candidate provenance is missing."
     references = {raw.reference.id: raw.reference for raw in evidence}
@@ -428,6 +434,27 @@ def _assess(
         EvidenceKind.STDOUT,
         EvidenceKind.STDERR,
     )
+    abnormal = execution.termination in (
+        TerminationStatus.CRASH,
+        TerminationStatus.ERROR_EXIT,
+        TerminationStatus.TIMEOUT,
+    )
+    sanitizer_condition_supported = any(
+        item.kind is ObservationKind.SANITIZER_ERROR
+        and item.condition_id in {condition.id for condition in trigger.constraints}
+        and item.status is FactStatus.OBSERVED
+        and item.satisfied is True
+        and item.provenance.source is execution.source
+        and item.provenance.source_sha256 is not None
+        and item.evidence_ids
+        and all(references[key].kind is EvidenceKind.SANITIZER_LOG for key in item.evidence_ids)
+        for item in observations
+    )
+    if abnormal and not sanitizer_condition_supported:
+        return (
+            VerificationVerdict.NOT_VERIFIED,
+            "Abnormal termination requires a satisfied target-linked sanitizer observation.",
+        )
     for condition in trigger.constraints:
         if condition.knowledge.value is not True:
             return VerificationVerdict.NOT_VERIFIED, "A required condition is not established."
@@ -441,15 +468,33 @@ def _assess(
             and item.provenance.source is execution.source
             and item.provenance.source_sha256 is not None
             and item.evidence_ids
-            and all(references[key].kind in runtime_kinds for key in item.evidence_ids)
+            and all(
+                references[key].kind
+                in (
+                    (EvidenceKind.SANITIZER_LOG,)
+                    if abnormal and item.kind is ObservationKind.SANITIZER_ERROR
+                    else runtime_kinds
+                )
+                for key in item.evidence_ids
+            )
         ]
         if not valid:
-            return (
-                VerificationVerdict.NOT_VERIFIED,
-                "A condition lacks objective linked runtime proof.",
+            reason = (
+                "Abnormal termination is not proof; every condition needs linked evidence "
+                "and a target-linked sanitizer observation is required."
+                if abnormal
+                else "A condition lacks objective linked runtime proof."
             )
+            return VerificationVerdict.NOT_VERIFIED, reason
         if any(item.status is FactStatus.OBSERVED and item.satisfied is False for item in related):
             return VerificationVerdict.UNKNOWN, "Objective condition observations conflict."
+    if abnormal:
+        return (
+            VerificationVerdict.VERIFIED,
+            "Target-specific sanitizer evidence and linked condition observations support all "
+            f"conditions; the recorded {execution.termination.value} status is preserved "
+            "within this execution scope.",
+        )
     return (
         VerificationVerdict.VERIFIED,
         "All conditions have objective proof within the recorded scope.",
@@ -467,7 +512,7 @@ def _unmet_conditions(
         execution.source not in (SourceKind.REAL_EXECUTION, SourceKind.EMULATOR)
         or execution.scope is ExecutionScope.COMPILE_ONLY
         or not execution.completed
-        or execution.termination is not TerminationStatus.NORMAL
+        or execution.termination in (TerminationStatus.NOT_EXECUTED, TerminationStatus.UNKNOWN)
         or not evidence
         or any(raw.reference.provenance.source_sha256 is None for raw in evidence)
     ):
@@ -479,6 +524,11 @@ def _unmet_conditions(
         EvidenceKind.TRACE,
         EvidenceKind.STDOUT,
         EvidenceKind.STDERR,
+    )
+    abnormal = execution.termination in (
+        TerminationStatus.CRASH,
+        TerminationStatus.ERROR_EXIT,
+        TerminationStatus.TIMEOUT,
     )
     unmet = []
     for condition in trigger.constraints:
@@ -496,11 +546,32 @@ def _unmet_conditions(
             and item.provenance.source is execution.source
             and item.provenance.source_sha256 is not None
             and item.evidence_ids
-            and all(references[key].kind in runtime_kinds for key in item.evidence_ids)
+            and all(
+                references[key].kind
+                in (
+                    (EvidenceKind.SANITIZER_LOG,)
+                    if abnormal and item.kind is ObservationKind.SANITIZER_ERROR
+                    else runtime_kinds
+                )
+                for key in item.evidence_ids
+            )
             for item in related
         )
         if not known or condition.knowledge.value is not True or contradicted or not supported:
             unmet.append(condition.id)
+    sanitizer_condition_supported = any(
+        item.kind is ObservationKind.SANITIZER_ERROR
+        and item.condition_id in {condition.id for condition in trigger.constraints}
+        and item.status is FactStatus.OBSERVED
+        and item.satisfied is True
+        and item.provenance.source is execution.source
+        and item.provenance.source_sha256 is not None
+        and item.evidence_ids
+        and all(references[key].kind is EvidenceKind.SANITIZER_LOG for key in item.evidence_ids)
+        for item in observations
+    )
+    if abnormal and not sanitizer_condition_supported:
+        return tuple(condition.id for condition in trigger.constraints)
     return tuple(unmet)
 
 
@@ -517,10 +588,17 @@ def _limitations(execution: ExecutionRecord) -> tuple[str, ...]:
         items.append("Emulator evidence supports its modeled environment, not physical hardware.")
     if execution.scope is ExecutionScope.COMPILE_ONLY:
         items.append("Compilation does not establish runtime triggering.")
-    if execution.termination in (TerminationStatus.CRASH, TerminationStatus.TIMEOUT):
+    if execution.termination in (
+        TerminationStatus.CRASH,
+        TerminationStatus.ERROR_EXIT,
+        TerminationStatus.TIMEOUT,
+    ):
         items.append(
-            "A crash or timeout alone does not prove that target conditions were satisfied."
+            "The abnormal process status is preserved; verification requires linked objective "
+            "evidence for every condition and a target-linked sanitizer observation."
         )
+    elif execution.termination is TerminationStatus.UNKNOWN:
+        items.append("The target process exit status could not be established.")
     return tuple(items)
 
 

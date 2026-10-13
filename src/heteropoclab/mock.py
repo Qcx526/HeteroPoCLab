@@ -439,7 +439,13 @@ class MockAdapter:
             scope=ExecutionScope.MOCK,
             completed=not unknown,
             exit_code=None if unknown else (1 if failed else 0),
-            termination=TerminationStatus.NOT_EXECUTED if unknown else TerminationStatus.NORMAL,
+            termination=(
+                TerminationStatus.NOT_EXECUTED
+                if unknown
+                else TerminationStatus.ERROR_EXIT
+                if failed
+                else TerminationStatus.NORMAL
+            ),
         )
         raw = self._raw(
             run,
