@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "heteropoclab"
+version = "0.1.0a0"
+description = "Evidence-driven domain contracts for heterogeneous PoC research"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["pydantic==2.12.5"]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.4.2",
+  "ruff==0.14.0",
+  "mypy==1.18.2",
+  "build==1.3.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+heteropoclab = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+cache_dir = "output/m0a/pytest-cache"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+cache-dir = "output/m0a/ruff-cache"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src/heteropoclab"]
+strict = true
+plugins = ["pydantic.mypy"]
+cache_dir = "output/m0a/mypy-cache"

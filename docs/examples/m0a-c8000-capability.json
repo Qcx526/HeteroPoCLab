@@ -1,0 +1,245 @@
+{
+  "can_execute": false,
+  "compatibility_decision": {
+    "issues": [
+      {
+        "dimension": "isa_profile",
+        "reason": "The requested fact is unknown or not checked; it is not a wildcard.",
+        "schema_version": "1.0",
+        "status": "UNKNOWN"
+      },
+      {
+        "dimension": "endian",
+        "reason": "The requested fact is unknown or not checked; it is not a wildcard.",
+        "schema_version": "1.0",
+        "status": "UNKNOWN"
+      },
+      {
+        "dimension": "bit_width",
+        "reason": "The requested fact is unknown or not checked; it is not a wildcard.",
+        "schema_version": "1.0",
+        "status": "UNKNOWN"
+      },
+      {
+        "dimension": "abi",
+        "reason": "The requested fact is unknown or not checked; it is not a wildcard.",
+        "schema_version": "1.0",
+        "status": "UNKNOWN"
+      }
+    ],
+    "platform_id": "platform:02eb166a136d65a4f203b0b96f8a231593247167e438d3137444e0be78690216",
+    "schema_version": "1.0",
+    "status": "UNKNOWN"
+  },
+  "manual_provenance_requirement": {
+    "note": "A future inspected vendor manual must supply its actual hash and provenance.",
+    "sha256": null,
+    "source": "DOCUMENTATION",
+    "status": "NOT_CHECKED"
+  },
+  "notice": "Requirements only; no C8000 toolchain, debugger, bus, or hardware was tested.",
+  "platform_capability": {
+    "abi": {
+      "provenance": null,
+      "schema_version": "1.0",
+      "source": "UNKNOWN",
+      "status": "UNKNOWN",
+      "value": null
+    },
+    "binary_format": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "ELF"
+    },
+    "bit_width": {
+      "provenance": null,
+      "schema_version": "1.0",
+      "source": "UNKNOWN",
+      "status": "UNKNOWN",
+      "value": null
+    },
+    "category": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "embedded"
+    },
+    "debug_capabilities": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": [
+        "vendor.non-GDB.JTAG"
+      ]
+    },
+    "endian": {
+      "provenance": null,
+      "schema_version": "1.0",
+      "source": "UNKNOWN",
+      "status": "UNKNOWN",
+      "value": null
+    },
+    "evidence_capabilities": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": [
+        "serial.bytes",
+        "hardware.result"
+      ]
+    },
+    "execution_mode": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "REAL_HARDWARE"
+    },
+    "id": "platform:02eb166a136d65a4f203b0b96f8a231593247167e438d3137444e0be78690216",
+    "input_interfaces": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": [
+        "UART",
+        "CAN",
+        "SPI",
+        "GPIO"
+      ]
+    },
+    "isa": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "PowerPC"
+    },
+    "isa_profile": {
+      "provenance": null,
+      "schema_version": "1.0",
+      "source": "UNKNOWN",
+      "status": "UNKNOWN",
+      "value": null
+    },
+    "label": "C8000 PowerPC requirement scenario; hardware NOT_CHECKED",
+    "observation_capabilities": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": [
+        "UART",
+        "hardware.result"
+      ]
+    },
+    "os": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "baremetal"
+    },
+    "runtime": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "baremetal hardware runtime; version NOT_CHECKED"
+    },
+    "schema_version": "1.0",
+    "toolchain": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "self-developed environment; version NOT_CHECKED"
+    }
+  },
+  "platform_requirement": {
+    "abi": {
+      "provenance": null,
+      "schema_version": "1.0",
+      "source": "UNKNOWN",
+      "status": "UNKNOWN",
+      "value": null
+    },
+    "binary_format": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "ELF"
+    },
+    "bit_width": {
+      "provenance": null,
+      "schema_version": "1.0",
+      "source": "UNKNOWN",
+      "status": "UNKNOWN",
+      "value": null
+    },
+    "category": null,
+    "debug_capabilities": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": [
+        "vendor.non-GDB.JTAG"
+      ]
+    },
+    "endian": {
+      "provenance": null,
+      "schema_version": "1.0",
+      "source": "UNKNOWN",
+      "status": "UNKNOWN",
+      "value": null
+    },
+    "evidence_capabilities": null,
+    "execution_mode": null,
+    "input_interfaces": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": [
+        "UART",
+        "CAN",
+        "SPI",
+        "GPIO"
+      ]
+    },
+    "isa": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "PowerPC"
+    },
+    "isa_profile": {
+      "provenance": null,
+      "schema_version": "1.0",
+      "source": "UNKNOWN",
+      "status": "UNKNOWN",
+      "value": null
+    },
+    "observation_capabilities": null,
+    "os": {
+      "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+      "schema_version": "1.0",
+      "source": "USER_REQUIREMENT",
+      "status": "INFERRED",
+      "value": "baremetal"
+    },
+    "platform_id": "platform:02eb166a136d65a4f203b0b96f8a231593247167e438d3137444e0be78690216",
+    "runtime": null,
+    "schema_version": "1.0",
+    "toolchain": null
+  },
+  "schema_version": "1.0"
+}

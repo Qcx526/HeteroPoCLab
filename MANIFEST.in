@@ -1,0 +1,5 @@
+include AGENTS.md
+include docs/m0a-domain-contracts.md
+recursive-include docs/examples *.json
+recursive-include examples/m0a *.py
+recursive-include tests *.py
