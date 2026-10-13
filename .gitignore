@@ -1,0 +1,28 @@
+/output/
+__pycache__/
+*.py[cod]
+
+# Local Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Local environment secrets; templates must contain reviewed placeholders only
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Common local private keys and key containers
+id_rsa
+id_dsa
+id_ecdsa
+id_ecdsa_sk
+id_ed25519
+id_ed25519_sk
+*.key
+*.pem
+*.p12
+*.pfx
+*.ppk
