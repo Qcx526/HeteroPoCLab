@@ -1,0 +1,541 @@
+{
+  "execution_record": {
+    "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+    "completed": true,
+    "exit_code": 0,
+    "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+    "run_id": "example-mock-run-001",
+    "schema_version": "1.0",
+    "scope": "MOCK",
+    "source": "MOCK",
+    "termination": "NORMAL"
+  },
+  "execution_request": {
+    "budget": {
+      "max_input_bytes": 128,
+      "max_memory_bytes": 4096,
+      "max_output_bytes": 4096,
+      "schema_version": "1.0",
+      "timeout_seconds": 1.0
+    },
+    "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+    "id": "request:0336b19312e78a021ab22e47b85159ce94f4eeaec45f22c2384b5d56e60ee53e",
+    "intent": "PREPARE_AND_RUN",
+    "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+    "run_id": "example-mock-run-001",
+    "schema_version": "1.0",
+    "verification_requirement": "CONDITION_LINKED_RUNTIME"
+  },
+  "input_event": {
+    "data": "Zml4dHVyZQD_",
+    "name": "mock.input",
+    "run_id": "example-mock-run-001",
+    "schema_version": "1.0"
+  },
+  "input_receipt": {
+    "accepted": true,
+    "evidence": {
+      "content": "Zml4dHVyZQD_",
+      "reference": {
+        "byte_length": 9,
+        "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+        "id": "evidence:9cee874c6aec8880319fe9856d94499c3be807e4e4a689240bb58f881d018a45",
+        "kind": "INPUT",
+        "locator": null,
+        "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+        "provenance": {
+          "host_path": null,
+          "locator": null,
+          "method": "mock input receipt 0 interface=mock.input",
+          "model_confidence": null,
+          "recorded_at": null,
+          "run_id": "example-mock-run-001",
+          "schema_version": "1.0",
+          "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+          "source": "MOCK",
+          "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1"
+        },
+        "run_id": "example-mock-run-001",
+        "schema_version": "1.0",
+        "sha256": "837fa57a9befadad9cc074f08a652a85287bfcc015fbcd61ad37a054f989430f"
+      },
+      "schema_version": "1.0"
+    },
+    "reason": "Bytes were stored only in this in-memory mock run.",
+    "schema_version": "1.0",
+    "status": "OBSERVED"
+  },
+  "notice": "Offline Mock contract only; no candidate code or hardware was executed.",
+  "observations": [
+    {
+      "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+      "condition_id": null,
+      "evidence_ids": [
+        "evidence:91398e68a39cf19107c64a42d70429d196a9c1a7d1d8c35755a9e76d7979b64e"
+      ],
+      "id": "observation:9d9521c81a1da51ff44b5f80bb8c8bafd4a762b42666eebd199afdcb5d06010e",
+      "kind": "RUN",
+      "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+      "provenance": {
+        "host_path": null,
+        "locator": null,
+        "method": "deterministic in-memory mock outcome",
+        "model_confidence": null,
+        "recorded_at": null,
+        "run_id": "example-mock-run-001",
+        "schema_version": "1.0",
+        "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+        "source": "MOCK",
+        "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1"
+      },
+      "run_id": "example-mock-run-001",
+      "satisfied": true,
+      "schema_version": "1.0",
+      "status": "OBSERVED"
+    }
+  ],
+  "platform_capability": {
+    "abi": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "mock.abi"
+    },
+    "binary_format": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "mock.text"
+    },
+    "bit_width": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": 32
+    },
+    "category": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "MOCK"
+    },
+    "debug_capabilities": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": []
+    },
+    "endian": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "little"
+    },
+    "evidence_capabilities": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": [
+        "mock.raw"
+      ]
+    },
+    "execution_mode": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "MOCK"
+    },
+    "id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+    "input_interfaces": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": [
+        "mock.input"
+      ]
+    },
+    "isa": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "mock.isa"
+    },
+    "isa_profile": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "mock.profile"
+    },
+    "label": "mock.default.v1",
+    "observation_capabilities": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": [
+        "mock.observation"
+      ]
+    },
+    "os": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "mock.os"
+    },
+    "runtime": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "mock.memory.v1"
+    },
+    "schema_version": "1.0",
+    "toolchain": {
+      "provenance": "declared mock configuration",
+      "schema_version": "1.0",
+      "source": "MOCK",
+      "status": "OBSERVED",
+      "value": "mock.no-compiler.v1"
+    }
+  },
+  "poc_candidate": {
+    "description": "Non-executable text; Mock never evaluates this payload.",
+    "expected_behavior": "Record input and Mock outcome; no verified vulnerability claim.",
+    "id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+    "language": "fixture-text",
+    "payload": "synthetic fixture payload",
+    "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+    "platform_requirement": {
+      "abi": null,
+      "binary_format": null,
+      "bit_width": null,
+      "category": null,
+      "debug_capabilities": null,
+      "endian": null,
+      "evidence_capabilities": null,
+      "execution_mode": null,
+      "input_interfaces": null,
+      "isa": null,
+      "isa_profile": null,
+      "observation_capabilities": null,
+      "os": null,
+      "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+      "runtime": null,
+      "schema_version": "1.0",
+      "toolchain": null
+    },
+    "provenance": {
+      "host_path": null,
+      "locator": null,
+      "method": "deterministic offline contract example; no real vulnerability",
+      "model_confidence": null,
+      "recorded_at": null,
+      "run_id": null,
+      "schema_version": "1.0",
+      "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+      "source": "SYNTHETIC",
+      "source_sha256": null
+    },
+    "schema_version": "1.0",
+    "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1",
+    "trigger_id": "trigger:bc0667cb8c6bd9fa6ee6ad604dc4ff33cb4845035a90bcfeba1cd890e6cfd824",
+    "vulnerability_id": "vulnerability:fd864d662007c471b811a56742ae2c7a72266ec3e9aadfc5b6cc667533a90b88"
+  },
+  "preparation_summary": {
+    "content_id": "prepared:55c67c01cc23c2e7c23360f2516e4390b4eef85dc21975f43934e582a8d1f1cf",
+    "decision": {
+      "issues": [],
+      "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+      "schema_version": "1.0",
+      "status": "COMPATIBLE"
+    },
+    "notice": "Random preparation instance ID omitted from this deterministic example.",
+    "status": "READY"
+  },
+  "raw_evidence": [
+    {
+      "content": "Zml4dHVyZQD_",
+      "reference": {
+        "byte_length": 9,
+        "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+        "id": "evidence:9cee874c6aec8880319fe9856d94499c3be807e4e4a689240bb58f881d018a45",
+        "kind": "INPUT",
+        "locator": null,
+        "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+        "provenance": {
+          "host_path": null,
+          "locator": null,
+          "method": "mock input receipt 0 interface=mock.input",
+          "model_confidence": null,
+          "recorded_at": null,
+          "run_id": "example-mock-run-001",
+          "schema_version": "1.0",
+          "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+          "source": "MOCK",
+          "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1"
+        },
+        "run_id": "example-mock-run-001",
+        "schema_version": "1.0",
+        "sha256": "837fa57a9befadad9cc074f08a652a85287bfcc015fbcd61ad37a054f989430f"
+      },
+      "schema_version": "1.0"
+    },
+    {
+      "content": "TU9DSyBzY2VuYXJpbz1OT1JNQUw7IGNhbmRpZGF0ZV9zb3VyY2Vfc2hhMjU2PWQ2NGYzZTczNTllYmRmMTdmN2I1MGU0NzM3Y2Y2MmM3ZDQ5MzY3YmM2NmY1OWRkMDJlODAwNGJlNmU4NGVmYzE7IG5vIGNhbmRpZGF0ZSBwcm9ncmFtIHdhcyBleGVjdXRlZC4K",
+      "reference": {
+        "byte_length": 147,
+        "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+        "id": "evidence:91398e68a39cf19107c64a42d70429d196a9c1a7d1d8c35755a9e76d7979b64e",
+        "kind": "RUNTIME_LOG",
+        "locator": null,
+        "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+        "provenance": {
+          "host_path": null,
+          "locator": null,
+          "method": "deterministic in-memory mock outcome",
+          "model_confidence": null,
+          "recorded_at": null,
+          "run_id": "example-mock-run-001",
+          "schema_version": "1.0",
+          "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+          "source": "MOCK",
+          "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1"
+        },
+        "run_id": "example-mock-run-001",
+        "schema_version": "1.0",
+        "sha256": "a2b239ae3521e79049188311cdb2545202e76ab6e2b5295986f2f98d62d4a51a"
+      },
+      "schema_version": "1.0"
+    }
+  ],
+  "schema_version": "1.0",
+  "trigger_spec": {
+    "constraints": [
+      {
+        "expression": "fixture receives the declared byte sequence",
+        "id": "condition:e2fdc58488bfc444ad456c2339644aa775fc3fa77b14d94cc5c804225c54a29a",
+        "knowledge": {
+          "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+          "schema_version": "1.0",
+          "source": "USER_REQUIREMENT",
+          "status": "INFERRED",
+          "value": true
+        },
+        "name": "declared input",
+        "schema_version": "1.0"
+      }
+    ],
+    "id": "trigger:bc0667cb8c6bd9fa6ee6ad604dc4ff33cb4845035a90bcfeba1cd890e6cfd824",
+    "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+    "schema_version": "1.0",
+    "vulnerability_id": "vulnerability:fd864d662007c471b811a56742ae2c7a72266ec3e9aadfc5b6cc667533a90b88"
+  },
+  "verification_result": {
+    "candidate": {
+      "description": "Non-executable text; Mock never evaluates this payload.",
+      "expected_behavior": "Record input and Mock outcome; no verified vulnerability claim.",
+      "id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+      "language": "fixture-text",
+      "payload": "synthetic fixture payload",
+      "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+      "platform_requirement": {
+        "abi": null,
+        "binary_format": null,
+        "bit_width": null,
+        "category": null,
+        "debug_capabilities": null,
+        "endian": null,
+        "evidence_capabilities": null,
+        "execution_mode": null,
+        "input_interfaces": null,
+        "isa": null,
+        "isa_profile": null,
+        "observation_capabilities": null,
+        "os": null,
+        "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+        "runtime": null,
+        "schema_version": "1.0",
+        "toolchain": null
+      },
+      "provenance": {
+        "host_path": null,
+        "locator": null,
+        "method": "deterministic offline contract example; no real vulnerability",
+        "model_confidence": null,
+        "recorded_at": null,
+        "run_id": null,
+        "schema_version": "1.0",
+        "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+        "source": "SYNTHETIC",
+        "source_sha256": null
+      },
+      "schema_version": "1.0",
+      "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1",
+      "trigger_id": "trigger:bc0667cb8c6bd9fa6ee6ad604dc4ff33cb4845035a90bcfeba1cd890e6cfd824",
+      "vulnerability_id": "vulnerability:fd864d662007c471b811a56742ae2c7a72266ec3e9aadfc5b6cc667533a90b88"
+    },
+    "evidence": [
+      {
+        "content": "Zml4dHVyZQD_",
+        "reference": {
+          "byte_length": 9,
+          "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+          "id": "evidence:9cee874c6aec8880319fe9856d94499c3be807e4e4a689240bb58f881d018a45",
+          "kind": "INPUT",
+          "locator": null,
+          "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+          "provenance": {
+            "host_path": null,
+            "locator": null,
+            "method": "mock input receipt 0 interface=mock.input",
+            "model_confidence": null,
+            "recorded_at": null,
+            "run_id": "example-mock-run-001",
+            "schema_version": "1.0",
+            "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+            "source": "MOCK",
+            "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1"
+          },
+          "run_id": "example-mock-run-001",
+          "schema_version": "1.0",
+          "sha256": "837fa57a9befadad9cc074f08a652a85287bfcc015fbcd61ad37a054f989430f"
+        },
+        "schema_version": "1.0"
+      },
+      {
+        "content": "TU9DSyBzY2VuYXJpbz1OT1JNQUw7IGNhbmRpZGF0ZV9zb3VyY2Vfc2hhMjU2PWQ2NGYzZTczNTllYmRmMTdmN2I1MGU0NzM3Y2Y2MmM3ZDQ5MzY3YmM2NmY1OWRkMDJlODAwNGJlNmU4NGVmYzE7IG5vIGNhbmRpZGF0ZSBwcm9ncmFtIHdhcyBleGVjdXRlZC4K",
+        "reference": {
+          "byte_length": 147,
+          "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+          "id": "evidence:91398e68a39cf19107c64a42d70429d196a9c1a7d1d8c35755a9e76d7979b64e",
+          "kind": "RUNTIME_LOG",
+          "locator": null,
+          "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+          "provenance": {
+            "host_path": null,
+            "locator": null,
+            "method": "deterministic in-memory mock outcome",
+            "model_confidence": null,
+            "recorded_at": null,
+            "run_id": "example-mock-run-001",
+            "schema_version": "1.0",
+            "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+            "source": "MOCK",
+            "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1"
+          },
+          "run_id": "example-mock-run-001",
+          "schema_version": "1.0",
+          "sha256": "a2b239ae3521e79049188311cdb2545202e76ab6e2b5295986f2f98d62d4a51a"
+        },
+        "schema_version": "1.0"
+      }
+    ],
+    "execution": {
+      "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+      "completed": true,
+      "exit_code": 0,
+      "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+      "run_id": "example-mock-run-001",
+      "schema_version": "1.0",
+      "scope": "MOCK",
+      "source": "MOCK",
+      "termination": "NORMAL"
+    },
+    "id": "verification:60b267f6b6f5a3dea7245e42b1362b0a8f3830cbb9ed54f66a08bd3d03eda2dc",
+    "limitations": [
+      "Structural checks validate declared provenance; they do not attest real execution.",
+      "Support is limited to MOCK on profile platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd.",
+      "Mock output does not prove physical hardware or real vulnerability triggering."
+    ],
+    "observations": [
+      {
+        "candidate_id": "candidate:7fd5bc3e3ae8bda6a06da9d1c93157e479a7c381b7e55d28ff6e5d4aa04bf88f",
+        "condition_id": null,
+        "evidence_ids": [
+          "evidence:91398e68a39cf19107c64a42d70429d196a9c1a7d1d8c35755a9e76d7979b64e"
+        ],
+        "id": "observation:9d9521c81a1da51ff44b5f80bb8c8bafd4a762b42666eebd199afdcb5d06010e",
+        "kind": "RUN",
+        "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+        "provenance": {
+          "host_path": null,
+          "locator": null,
+          "method": "deterministic in-memory mock outcome",
+          "model_confidence": null,
+          "recorded_at": null,
+          "run_id": "example-mock-run-001",
+          "schema_version": "1.0",
+          "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+          "source": "MOCK",
+          "source_sha256": "d64f3e7359ebdf17f7b50e4737cf62c7d49367bc66f59dd02e8004be6e84efc1"
+        },
+        "run_id": "example-mock-run-001",
+        "satisfied": true,
+        "schema_version": "1.0",
+        "status": "OBSERVED"
+      }
+    ],
+    "reason": "Source cannot establish objective runtime execution.",
+    "schema_version": "1.0",
+    "scope": "MOCK",
+    "trigger": {
+      "constraints": [
+        {
+          "expression": "fixture receives the declared byte sequence",
+          "id": "condition:e2fdc58488bfc444ad456c2339644aa775fc3fa77b14d94cc5c804225c54a29a",
+          "knowledge": {
+            "provenance": "declared requirement scenario; no hardware or vendor manual inspected",
+            "schema_version": "1.0",
+            "source": "USER_REQUIREMENT",
+            "status": "INFERRED",
+            "value": true
+          },
+          "name": "declared input",
+          "schema_version": "1.0"
+        }
+      ],
+      "id": "trigger:bc0667cb8c6bd9fa6ee6ad604dc4ff33cb4845035a90bcfeba1cd890e6cfd824",
+      "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+      "schema_version": "1.0",
+      "vulnerability_id": "vulnerability:fd864d662007c471b811a56742ae2c7a72266ec3e9aadfc5b6cc667533a90b88"
+    },
+    "unmet_conditions": [
+      "condition:e2fdc58488bfc444ad456c2339644aa775fc3fa77b14d94cc5c804225c54a29a"
+    ],
+    "verdict": "NOT_VERIFIED"
+  },
+  "vulnerability_spec": {
+    "affected_component": "fictional fixture parser",
+    "description": "Contract example, not an actual vulnerability specification.",
+    "id": "vulnerability:fd864d662007c471b811a56742ae2c7a72266ec3e9aadfc5b6cc667533a90b88",
+    "name": "Synthetic input condition",
+    "platform_id": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+    "provenance": {
+      "host_path": null,
+      "locator": null,
+      "method": "deterministic offline contract example; no real vulnerability",
+      "model_confidence": null,
+      "recorded_at": null,
+      "run_id": null,
+      "schema_version": "1.0",
+      "scope": "platform:69ac6709619a3e4bf9982a2bfd4ceb2e51f4c57c59f2e9c710423c49fdcd77dd",
+      "source": "SYNTHETIC",
+      "source_sha256": null
+    },
+    "schema_version": "1.0",
+    "source_sha256": null,
+    "source_trust": "UNKNOWN"
+  }
+}

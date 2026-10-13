@@ -26,3 +26,11 @@ id_ed25519_sk
 *.p12
 *.pfx
 *.ppk
+
+# Python build and local check artifacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+/build/
+/dist/
